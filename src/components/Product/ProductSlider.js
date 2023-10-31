@@ -16,7 +16,7 @@ export default class ProductSlider extends React.Component {
         return (
           <div>
             <div className={this.props.className}>
-              <div className="relative pt-[100%]  max-h-[900px] rounded-2xl">
+              <div className="relative pt-[80%]  max-h-[300px] rounded-2xl">
                 <Image
                   src="/img/products/product1.jpg"
                   fill

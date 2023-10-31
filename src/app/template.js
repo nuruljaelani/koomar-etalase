@@ -11,7 +11,7 @@ import Image from "next/image";
 export default function Template({ isVisible, children }) {
   return (
     <div>
-      <div className="container max-w-2xl p-1 lg:px-0">{children}</div>
+      <div className="">{children}</div>
     </div>
   );
 }

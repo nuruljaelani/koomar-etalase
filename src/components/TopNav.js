@@ -10,6 +10,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import Link from "next/link";
+import { Icon } from "@iconify/react";
 export default function TopNav() {
     const menu = [
         { text: "About", link: "", },
@@ -20,13 +21,13 @@ export default function TopNav() {
         <>
             <div className="h-[100px] flex items-center gap-4 fixed left-0 top-0 right-0 max-w-2xl mx-auto font-bold z-20 bg-white">
                 <Sheet>
-                    <SheetTrigger asChild>
-                        <Button variant="ghost">
-                            <Menu size={25}/>
-                        </Button> 
-                    </SheetTrigger>
+                    <Button variant="ghost" size="icon" className="p-0" asChild>
+                        <SheetTrigger>
+                                <Menu size={25}/>
+                        </SheetTrigger>
+                    </Button> 
                     <SheetContent side="left" className="bg-white p-0">                        
-                        <SheetDescription className="p-0">
+                        <SheetDescription className="p-0 flex flex-col h-full">
                             <div className="flex flex-col gap-3 p-5">
                                 <Image src="/img/store.svg" width={70} height={70} className="object-center" alt="" />
                                 <div>NAMA TOKO</div>
@@ -38,6 +39,17 @@ export default function TopNav() {
                                     ))
                                 }
                             </div>
+                            <div className="flex flex-col gap-3 p-6 mt-auto">
+                                <Button className="bg-green-500 hover:bg-green-300 border-black border">
+                                    <Icon icon="ic:baseline-whatsapp" className="sm:mr-2" /> <span className="hidden sm:inline">WA Kami</span>
+                                </Button>
+                                <Button className="bg-black hover:bg-gray-700 border-black border">
+                                    <Icon icon="ic:baseline-tiktok" className="sm:mr-2" /> <span className="hidden sm:inline">@namatoko</span>
+                                </Button>
+                                <Button className="bg-purple-500 hover:bg-purple-300 border-black border">
+                                    <Icon icon="mdi:instagram" className="sm:mr-2" /> <span className="hidden sm:inline">@namatoko</span>
+                                </Button>
+                            </div>
                         </SheetDescription>
                     </SheetContent>
                 </Sheet>
@@ -47,8 +59,10 @@ export default function TopNav() {
                     <div>Nama Store</div>
                 </Link>
                 <div className="flex ml-auto">
-                    <Button variant="ghost">
-                        <Search size={25}/>
+                    <Button variant="ghost" size="icon" className="p-1" asChild>
+                        <Link href="/search">
+                            <Search size={25}/>
+                        </Link>
                     </Button> 
                 </div>
             </div>
