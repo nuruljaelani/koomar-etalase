@@ -13,9 +13,9 @@ import Link from "next/link";
 import { Icon } from "@iconify/react";
 export default function TopNav() {
     const menu = [
-        { text: "About", link: "", },
-        { text: "Product", link: "", },
-        { text: "My Cart", link: "", },
+        { text: "About", link: "/about", },
+        { text: "Product", link: "/search", },
+        { text: "My Cart", link: "/cart", },
     ]
     return (
         <>
@@ -41,13 +41,13 @@ export default function TopNav() {
                             </div>
                             <div className="flex flex-col gap-3 p-6 mt-auto">
                                 <Button className="bg-green-500 hover:bg-green-300 border-black border">
-                                    <Icon icon="ic:baseline-whatsapp" className="sm:mr-2" /> <span className="hidden sm:inline">WA Kami</span>
+                                    <Icon icon="ic:baseline-whatsapp" className="sm:mr-2" /> <span className="">WA Kami</span>
                                 </Button>
                                 <Button className="bg-black hover:bg-gray-700 border-black border">
-                                    <Icon icon="ic:baseline-tiktok" className="sm:mr-2" /> <span className="hidden sm:inline">@namatoko</span>
+                                    <Icon icon="ic:baseline-tiktok" className="sm:mr-2" /> <span className="">@namatoko</span>
                                 </Button>
                                 <Button className="bg-purple-500 hover:bg-purple-300 border-black border">
-                                    <Icon icon="mdi:instagram" className="sm:mr-2" /> <span className="hidden sm:inline">@namatoko</span>
+                                    <Icon icon="mdi:instagram" className="sm:mr-2" /> <span className="">@namatoko</span>
                                 </Button>
                             </div>
                         </SheetDescription>
