@@ -8,9 +8,6 @@ export default class ProductSlider extends React.Component {
             productId: null,
         }
     }
-    componentDidMount(){
-        
-    }
     
     render() {
         return (
@@ -18,13 +15,13 @@ export default class ProductSlider extends React.Component {
             <div className={this.props.className}>
               <div className="relative pt-[80%]  max-h-[300px] rounded-2xl">
                 <Image
-                  src="/img/products/product1.jpg"
+                  src={this.props.image}
                   fill
                   className="object-cover rounded-2xl mb-5"
                   alt=""
                 />
                 <div className="absolute left-0 bottom-0 right-0 bg-gradient-to-t from-black h-[200px] flex items-end text-white px-3 py-5 text-left font-bold">
-                  <div>Product Name</div>
+                  <div>{this.props.name ?? "Product Name"}</div>
                 </div>
               </div>
               <div className="flex flex-wrap justify-center mt-4">

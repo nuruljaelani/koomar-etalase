@@ -1,24 +1,14 @@
-"use client";
-import Home from "@/app";
+"use client"
 import { Button } from "@/components/ui/button";
-import {
-  Sheet,
-  SheetTrigger,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetDescription,
-  SheetClose,
-} from "@/components/ui/sheet";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import Image from "next/image";
-import ProductSlider from "@/components/Product/ProductSlider";
-import { ArrowLeft, MinusCircle, PlusCircle, ShoppingBag } from "lucide-react";
-import Layout from "@/components/Layout";
+import { ArrowLeft } from "lucide-react";
+import axios from "@/lib/axios";
+
 export default function Page({ params }) {
   const router = useRouter();
   const [openDetail, setOpenDetail] = useState(false);
+  const [toko, setToko] = useState();
 
   const onModalClosed = () => {
     if (openDetail == true) {
@@ -33,9 +23,9 @@ export default function Page({ params }) {
       }, 100);
     }
   };
- router.events?.on("routeChangeStart", () => {
-   console.log(router.asPath())
- });
+  router.events?.on("routeChangeStart", () => {
+    console.log(router.asPath());
+  });
   useEffect(() => {
     setOpenDetail(true);
     const scrollPosition = sessionStorage.getItem("scrollPosition");
@@ -44,7 +34,17 @@ export default function Page({ params }) {
       window.scrollTo(0, parseInt(scrollPosition));
       //   sessionStorage.removeItem("scrollPosition");
     }
+
+    getToko().then(res => setToko(res.data))
   }, []);
+
+  async function getToko() {
+    const res = await axios.get("etalase/toko");
+    return res.data;
+  }
+
+  console.log(toko);
+
   return (
     <div className="container max-w-2xl p-1 lg:px-0 bg-white">
       <div className="">
@@ -60,10 +60,13 @@ export default function Page({ params }) {
                 Tentang Kami
               </h1>
               <p className="leading-7 [&:not(:first-child)]:mt-6">
-                Once upon a time, in a far-off land, there was a very lazy king
-                who spent all day lounging on his throne. One day, his advisors
-                came to him with a problem: the kingdom was running out of
-                money.
+                {
+                  toko?.toko_deskripsi ??
+                  `Once upon a time, in a far-off land, there was a very lazy king
+                  who spent all day lounging on his throne. One day, his advisors
+                  came to him with a problem: the kingdom was running out of
+                  money.`
+                }
               </p>
               <h2 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
                 The King's Plan
