@@ -66,7 +66,6 @@ export default function Page({ params }) {
     }
   }, [isUpdated]);
 
-  console.log(cartLists);
   return (
     <div className="container max-w-2xl p-1 lg:px-0 bg-white">
       <div className="h-[98vh]">

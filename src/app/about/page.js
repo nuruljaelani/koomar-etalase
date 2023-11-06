@@ -68,7 +68,7 @@ export default function Page({ params }) {
                   money.`
                 }
               </p>
-              <h2 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
+              {/* <h2 className="mt-10 scroll-m-20 border-b pb-2 text-3xl font-semibold tracking-tight transition-colors first:mt-0">
                 The King's Plan
               </h2>
               <p className="leading-7 [&:not(:first-child)]:mt-6">
@@ -172,7 +172,7 @@ export default function Page({ params }) {
               <p className="leading-7 [&:not(:first-child)]:mt-6">
                 The moral of the story is: never underestimate the power of a
                 good laugh and always be careful of bad ideas.
-              </p>
+              </p> */}
             </div>
           </div>
         </div>
