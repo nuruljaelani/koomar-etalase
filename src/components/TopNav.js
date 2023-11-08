@@ -14,10 +14,11 @@ import { Icon } from "@iconify/react";
 import img from "../../public/img/store.svg"
 export default function TopNav(props) {
   const toko = props.data;
+  console.log(toko);
   const menu = [
-    { text: "About", link: "/about" },
-    { text: "Product", link: "/search" },
-    { text: "My Cart", link: "/cart" },
+    { text: "About", link: `/${toko?.toko_slug}/about` },
+    { text: "Product", link: `/${toko?.toko_slug}/search` },
+    { text: "My Cart", link: `/${toko?.toko_slug}/cart` },
   ];
 
   const tokoName = toko?.toko_nama ?? "NAMA TOKO";
@@ -71,7 +72,7 @@ export default function TopNav(props) {
           </SheetContent>
         </Sheet>
 
-        <Link href="/" className="flex gap-4 items-center">
+        <Link href={`/${toko?.toko_slug}`} className="flex gap-4 items-center">
           <Image
             src="/img/store.svg"
             width={50}
@@ -83,7 +84,7 @@ export default function TopNav(props) {
         </Link>
         <div className="flex ml-auto">
           <Button variant="ghost" size="icon" className="p-1" asChild>
-            <Link href="/search">
+            <Link href={`/${toko?.toko_slug}/search`}>
               <Search size={25} />
             </Link>
           </Button>

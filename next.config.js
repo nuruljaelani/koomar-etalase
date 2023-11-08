@@ -4,6 +4,15 @@ const nextConfig = {
   images: {
     domains: ['i.dummyjson.com', 's3.amazonaws.com']
   }
+  // async redirects() {
+  //   return [
+  //     {
+  //       source: "/",
+  //       destination: ":toko",
+  //       permanent: true
+  //     }
+  //   ]
+  // }
 };
 
 module.exports = nextConfig

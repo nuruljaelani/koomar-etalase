@@ -29,7 +29,7 @@ export default function ProductList(props) {
         </div>
         <div className="p-3 -mt-3 lg:p-5 lg:-mt-5">
           <Button className="w-full"  onClick={handleClick} asChild>
-            <Link href={`/product/${slug}`}>
+            <Link href={`${props.toko}/product/${slug}`}>
               <ShoppingBag className="mr-3" /> Beli Sekarang
             </Link>
           </Button>

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import React from "react";
 // import { Splide, SplideSlide } from "@splidejs/react-splide";
+import p1 from "../../../public/img/products/product1.jpg"
 export default class ProductSlider extends React.Component {
     constructor(props) {
         super(props)
@@ -15,7 +16,7 @@ export default class ProductSlider extends React.Component {
             <div className={this.props.className}>
               <div className="relative pt-[80%]  max-h-[300px] rounded-2xl">
                 <Image
-                  src={this.props.image}
+                  src={this.props.image ?? p1}
                   fill
                   className="object-cover rounded-2xl mb-5"
                   alt=""
