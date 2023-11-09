@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import { ArrowLeft } from "lucide-react";
 import axios from "@/lib/axios";
 
-export default function Page({ params }) {
+export default function Page() {
   const router = useRouter();
   const [openDetail, setOpenDetail] = useState(false);
   const [toko, setToko] = useState();

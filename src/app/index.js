@@ -135,17 +135,17 @@ export default function Home(props) {
     return res.data;
   };
 
-  // const getBanners = async () => {
-  //   const res = await axios.get("etalase/banner");
-  //   return res.data;
-  // };
+  const getBanners = async () => {
+    const res = await axios.get("etalase/banner");
+    return res.data;
+  };
   useEffect(() => {
     getToko().then((res) => {
       setToko(res.data)
       setMarketplace(res.data.marketplace)
       setSosmed(res.data.sosmed)
     });
-    // getBanners().then((res) => setBanner(res.data));
+    getBanners().then((res) => setBanner(res.data));
   }, []);
 
   const a = sosmed.findIndex(el => el.sosmed_type == "tiktok")
@@ -179,7 +179,7 @@ export default function Home(props) {
         </div>
       </div>
       <div className="bg-slate-300 rounded-2xl col-span-full mb-5">
-        {/* <Splide aria-label="My Favorite Images">
+        <Splide aria-label="My Favorite Images">
           {banner?.map((item, i) => (
             <div key={i}>
               <SplideSlide>
@@ -200,7 +200,7 @@ export default function Home(props) {
               </SplideSlide>
             </div>
           ))}
-        </Splide> */}
+        </Splide>
       </div>
       <div className="grid grid-cols-3 gap-3 mb-3">
         <Button className="bg-green-500 hover:bg-green-300 border-black border">

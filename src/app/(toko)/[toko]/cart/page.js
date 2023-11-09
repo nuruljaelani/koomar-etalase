@@ -5,12 +5,15 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ArrowLeft, MinusCircle, PlusCircle } from "lucide-react";
+import Link from "next/link";
+import axios from "@/lib/axios";
 
 export default function Page({ params }) {
   const router = useRouter();
   const [openDetail, setOpenDetail] = useState(false);
   const [cartLists, setCartLists] = useState([]);
   const [isUpdated, setIsUpdated] = useState(false);
+  const [toko, setToko] = useState({})
 
   const onModalClosed = () => {
     if (openDetail == true) {
@@ -58,6 +61,16 @@ export default function Page({ params }) {
       //   sessionStorage.removeItem("scrollPosition");
     }
 
+    const getToko = async () => {
+      const res = await axios.get("etalase/toko", {
+        params: {
+          toko_slug: params.toko
+        }
+      });
+      return res.data;
+    };
+
+    getToko().then(res => setToko(res.data))
     const carts = localStorage.getItem("carts");
     if (carts == undefined) {
       setCartLists([]);
@@ -106,15 +119,21 @@ export default function Page({ params }) {
                 >
                   <MinusCircle />
                 </Button>
-                <Button variant="ghost" className="py-1 px-3" onClick={() => addQty(item.id)}>
+                <Button
+                  variant="ghost"
+                  className="py-1 px-3"
+                  onClick={() => addQty(item.id)}
+                >
                   <PlusCircle />
                 </Button>
               </div>
             </div>
           ))}
-          <Button className="w-full h-[50px] bg-green-500 hover:bg-green-400 mt-auto">
-            Buy now via Whatsapp
-          </Button>
+          <Link href={`https://wa.me/${toko?.toko_wa}`} target={"_blank"}>
+            <Button className="w-full h-[50px] bg-green-500 hover:bg-green-400 mt-auto">
+              Buy now via Whatsapp
+            </Button>
+          </Link>
         </div>
       </div>
     </div>
