@@ -3,7 +3,7 @@ import Layout from "@/components/Layout";
 import ProductList from "@/components/ProductList";
 import TopNav from "@/components/TopNav";
 import { Button } from "@/components/ui/button";
-import { Search, SearchIcon, ShoppingCart } from "lucide-react";
+import { Search, SearchIcon, SearchX, ShoppingCart } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
@@ -11,133 +11,44 @@ import "@splidejs/splide/css";
 import { Splide, SplideSlide } from "@splidejs/react-splide";
 import { Icon } from "@iconify/react";
 import axios from "@/lib/axios";
+import { useRouter } from "next/navigation";
 export default function Home(props) {
   const [toko, setToko] = useState();
   const [banner, setBanner] = useState([]);
   const [marketplace, setMarketplace] = useState([]);
   const [sosmed, setSosmed] = useState([]);
   const [scroll, setScroll] = useState(0);
-  const [dataProd, setDataProd] = useState([
-    // {
-    //     thumb: "img/products/product1.jpg",
-    //     title: "Fashionista Code Example Title Long Name Long Name Long Name A Number 2 [Limited Edition]",
-    //     price: "Rp 500.000,-",
-    // },
-    // {
-    //     thumb: "img/products/product1.jpg",
-    //     title: "Fashionista Code Example Title Long Name Long Name Long Name A Number 2 [Limited Edition]",
-    //     price: "Rp 500.000,-",
-    // },
-    // {
-    //     thumb: "img/products/product1.jpg",
-    //     title: "Fashionista Code Example Title Long Name Long Name Long Name A Number 2 [Limited Edition]",
-    //     price: "Rp 500.000,-",
-    // },
-    // {
-    //     thumb: "img/products/product1.jpg",
-    //     title: "Fashionista Code Example Title Long Name Long Name Long Name A Number 2 [Limited Edition]",
-    //     price: "Rp 500.000,-",
-    // },
-    // {
-    //     thumb: "img/products/product1.jpg",
-    //     title: "Fashionista Code Example Title Long Name Long Name Long Name A Number 2 [Limited Edition]",
-    //     price: "Rp 500.000,-",
-    // },
-  ]);
+  const [dataProd, setDataProd] = useState([]);
   const [param, setParam] = useState({
     page: 1,
     pageSize: 10,
-    toko_slug: props.params.toko
-  })
-  const [currentScroll, setCurrentScroll] = useState(0);
-  const dummyProd = fetch("https://dummyjson.com/products?limit=10").then(
-    (res) => res.json()
-  );
+    toko_slug: props.params.toko,
+  });
 
+  const router = useRouter()
   const handleClick = (e) => {
     sessionStorage.setItem("scrollPosition", window.scrollY);
   };
-  const handleScroll = () => {
-    const position = window.scrollY;
-    setCurrentScroll(position);
-    //   console.log(currentScroll);
-  };
-  const sendData = () => {
-    let dato = dummyProd.then((res) => {
-      const { products } = res;
-      const data = [];
-      products?.map((item, id) => {
-        data.push({
-          thumb: item.thumbnail,
-          title: item.title,
-          price: item.price * 100,
-        });
-      });
-      setDataProd([
-        {
-          thumb: "img/products/product1.jpg",
-          title:
-            "Fashionista Code Example Title Long Name Long Name Long Name A Number 2 [Limited Edition]",
-          price: "Rp 500.000,-",
-        },
-      ]);
-    });
-    // console.log(data)
-    // dummyProd.products?.map((item,id)=>{
-    //     data.push({
-    //         thumb: item.thumbnail,
-    //         title: item.title,
-    //         price: item.price*100
 
-    //     })
-    // })
-    // return dummyProd.products
-  };
+  // useEffect(() => {
+  //   const getProducts = async () => {
+  //     const res = await axios.get("etalase/produk/all", {
+  //       params: param
+  //     })
 
-  const getProducts = async () => {
-    const res = await axios.get("etalase/produk/all", {
-      params: param
-    })
+  //     return res.data
+  //   }
+  //   if (toko) {
+  //     getProducts().then(res => setDataProd(res.data))
+  //   }
+  // }, [currentScroll]);
 
-    return res.data
-  }
-  useEffect(() => {
-    // if (dataProd) {
-    //   if (dataProd.length < 1) {
-    //     let dato = dummyProd.then((res) => {
-    //       const { products } = res;
-    //       const data = [];
-    //       products?.map((item, id) => {
-    //         data.push({
-    //           thumb: item.thumbnail,
-    //           title: item.title,
-    //           price: item.price * 100,
-    //         });
-    //       });
-    //       setDataProd([...data]);
-    //     });
-    //   }
-    // }
-    const scrollPosition = sessionStorage.getItem("scrollPosition");
-    // if(scrollPosition == 0) {
-
-    //     window.addEventListener("scroll", handleScroll,{passive: true});
-    //     return () => {
-    //         window.removeEventListener("scroll", handleScroll);
-    //     };
-    // } else {
-    //     window.scrollTo(0, parseInt(scrollPosition));
-    // }
-    getProducts().then(res => setDataProd(res.data))
-  }, [currentScroll]);
-
-  
   useEffect(() => {
     const getToko = async () => {
       const res = await axios.get("etalase/toko", {
         params: {
-          toko_slug: props.params.toko
-        }
+          toko_slug: props.params.toko,
+        },
       });
       return res.data;
     };
@@ -145,36 +56,57 @@ export default function Home(props) {
     const getBanners = async () => {
       const res = await axios.get("etalase/banner", {
         params: {
-          toko_slug: param.toko_slug
-        }
+          toko_slug: param.toko_slug,
+        },
       });
       return res.data;
     };
 
+    const getProducts = async () => {
+      const res = await axios.get("etalase/produk/all", {
+        params: param,
+      });
+
+      return res.data;
+    };
+
     getToko().then((res) => {
-      setToko(res.data)
-      setMarketplace(res.data.marketplace)
-      setSosmed(res.data.sosmed)
-    });
-    getBanners().then((res) => {
-      if (res) {
-        setBanner(res.data)
-      } else {
-        setBanner([])
+      if (res.success) {
+        setToko(res.data);
+        setMarketplace(res.data.marketplace);
+        setSosmed(res.data.sosmed);
+        getProducts().then((res) => setDataProd(res.data));
+        getBanners().then((res) => {
+          if (res) {
+            setBanner(res.data);
+          } else {
+            setBanner([]);
+          }
+        });
       }
     });
   }, []);
 
-  const a = sosmed.findIndex(el => el.sosmed_type == "tiktok")
-  const b = sosmed.findIndex(el => el.sosmed_type == "instagram")
-  let tiktok
-  let instagram
+  const a = sosmed.findIndex((el) => el.sosmed_type == "tiktok");
+  const b = sosmed.findIndex((el) => el.sosmed_type == "instagram");
+  let tiktok;
+  let instagram;
   if (a > -1) {
-    tiktok = sosmed[a].sosmed_name
+    tiktok = sosmed[a].sosmed_name;
   }
 
   if (b > -1) {
-    instagram = sosmed[b].sosmed_name
+    instagram = sosmed[b].sosmed_name;
+  }
+
+  if (!toko) {
+    return (
+      <div className="flex flex-col gap-4 w-full justify-center items-center h-screen">
+        <SearchX className="" size={150} />
+        <div className="text-center font-semibold text-lg lg:text-xl">Toko tidak ada!</div>
+        <Button onClick={() => router.refresh()}>Muat Ulang Halaman</Button>
+      </div>
+    );
   }
 
   return (
@@ -196,32 +128,30 @@ export default function Home(props) {
         </div>
       </div>
       <div className="bg-slate-300 rounded-2xl col-span-full mb-5">
-      {
-        banner.length > 0 ?
-        <Splide aria-label="My Favorite Images">
-          {banner?.map((item, i) => (
-            <div key={i}>
-              <SplideSlide>
-                <Image
-                  src={item.banner_file}
-                  fill
-                  className="!relative w-full rounded-2xl"
-                  alt=""
-                />
-              </SplideSlide>
-              <SplideSlide>
-                <Image
-                  src={item.banner_file}
-                  fill
-                  className="!relative w-full rounded-2xl"
-                  alt=""
-                />
-              </SplideSlide>
-            </div>
-          ))}
-        </Splide> :
-        null
-      }
+        {banner.length > 0 ? (
+          <Splide aria-label="My Favorite Images">
+            {banner?.map((item, i) => (
+              <div key={i}>
+                <SplideSlide>
+                  <Image
+                    src={item.banner_file}
+                    fill
+                    className="!relative w-full rounded-2xl"
+                    alt=""
+                  />
+                </SplideSlide>
+                <SplideSlide>
+                  <Image
+                    src={item.banner_file}
+                    fill
+                    className="!relative w-full rounded-2xl"
+                    alt=""
+                  />
+                </SplideSlide>
+              </div>
+            ))}
+          </Splide>
+        ) : null}
       </div>
       <div className="grid grid-cols-3 gap-3 mb-3">
         <Button className="bg-green-500 hover:bg-green-300 border-black border">
@@ -237,14 +167,15 @@ export default function Home(props) {
           <span className="hidden sm:inline">@{instagram ?? "namatoko"}</span>
         </Button>
       </div>
-      {/* <div>{props.params?.map((item,id)=>(item))}</div> */}
       <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
         {dataProd && dataProd.length > 0 ? (
           dataProd?.map((item, id) => {
             return (
               <ProductList
                 key={id}
-                thumb={item.images.length > 0 ? item.images[0]?.gambar_file : null}
+                thumb={
+                  item.images.length > 0 ? item.images[0]?.gambar_file : null
+                }
                 title={item.produk_nama}
                 price={item.produk_harga}
                 openModalDetail={true}
